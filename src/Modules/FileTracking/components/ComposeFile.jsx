@@ -14,8 +14,15 @@ import {
   Autocomplete,
   Grid,
   Modal,
+  Paper,
+  Stack,
 } from "@mantine/core";
-import { Upload, FloppyDisk, Trash } from "@phosphor-icons/react";
+import {
+  Upload,
+  FloppyDisk,
+  PaperPlaneTilt,
+  Trash,
+} from "@phosphor-icons/react";
 import { notifications } from "@mantine/notifications";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -413,34 +420,74 @@ export default function Compose() {
       <Modal
         opened={showConfirmModal}
         onClose={() => setShowConfirmModal(false)}
-        title={
-          <Text align="center" weight={600} size="lg">
-            Confirm Submission
-          </Text>
-        }
+        title={null}
+        size="md"
+        radius="md"
+        padding="xl"
         centered
+        overlayProps={{
+          opacity: 0.55,
+          blur: 3,
+        }}
       >
-        <Text weight={600} mb="ls">
-          Do you want to send this file?
-        </Text>
-        <Text mb="ls">
-          Sender: {username}[{designation}]{" "}
-        </Text>
-        <Text mb="md">
-          Receiver: {receiver_username} [{receiver_designation}]
-        </Text>
-        <Group justify="center" gap="xl" style={{ width: "100%" }}>
-          <Button
-            onClick={() => setShowConfirmModal(false)}
-            variant="outline"
-            style={{ width: "120px" }}
-          >
-            Cancel
-          </Button>
-          <Button onClick={finalSubmit} color="blue" style={{ width: "120px" }}>
-            Confirm
-          </Button>
-        </Group>
+        <Stack spacing="xl">
+          <Title order={3} align="center" color="blue">
+            Confirm Submission
+          </Title>
+
+          <Paper withBorder p="md" radius="md" bg="gray.0">
+            <Text fw={600} mb="md">
+              Do you want to send this file?
+            </Text>
+
+            <Card withBorder mb="sm" radius="sm" p="sm">
+              <Group spacing="xs" noWrap>
+                <Text size="sm" c="dimmed">
+                  Sender:
+                </Text>
+                <Text fw={600}>{username}</Text>
+                <Text size="sm" c="dimmed" fs="italic">
+                  [{designation}]
+                </Text>
+              </Group>
+            </Card>
+
+            <Card withBorder radius="sm" p="sm">
+              <Group spacing="xs" noWrap>
+                <Text size="sm" c="dimmed">
+                  Receiver:
+                </Text>
+                <Text fw={600}>{receiver_username}</Text>
+                <Text size="sm" c="dimmed" fs="italic">
+                  [{receiver_designation}]
+                </Text>
+              </Group>
+            </Card>
+          </Paper>
+
+          <Group position="center" spacing="md">
+            <Button
+              onClick={() => setShowConfirmModal(false)}
+              variant="subtle"
+              color="gray"
+              radius="md"
+              size="md"
+              w={130}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={finalSubmit}
+              color="blue"
+              radius="md"
+              size="md"
+              w={130}
+              leftIcon={<PaperPlaneTilt size={16} />}
+            >
+              Confirm
+            </Button>
+          </Group>
+        </Stack>
       </Modal>
     </Card>
   );

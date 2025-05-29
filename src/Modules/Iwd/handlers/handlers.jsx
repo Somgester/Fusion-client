@@ -59,6 +59,42 @@ const GetFileData = async ({ setLoading, request, setMessages }) => {
   }
 };
 
+const GetWorkData = async ({ setWorkDetails, id, setLoading }) => {
+  const token = localStorage.getItem("authToken");
+  try {
+    setLoading(true);
+    const response = await axios.get(IWD_ROUTES.GET_WORK_DATA, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+      params: { request_id: id },
+    });
+    setWorkDetails(response.data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+const GetVendorData = async (id, setVendorData, setLoading) => {
+  const token = localStorage.getItem("authToken");
+  try {
+    setLoading(true);
+    const response = await axios.get(IWD_ROUTES.GET_VENDOR_DATA, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+      params: { work: id },
+    });
+    setVendorData(response.data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 const HandleRequest = async ({
   setIsLoading,
   setIsSuccess,
@@ -178,6 +214,48 @@ const HandleIssueWorkOrder = async ({
       setIsSuccess(true);
       setTimeout(() => {
         submitter();
+      }, 1000);
+    }, 1000);
+  } catch (error) {
+    console.error(error);
+    setIsLoading(false);
+  }
+};
+
+const HandleAddVendor = async ({
+  form,
+  setIsLoading,
+  setIsSuccess,
+  onBack,
+}) => {
+  /* 
+    This function is for adding vendor
+    Used in :
+    - /components/managebills/addvendors/AddVendor.jsx
+  */
+  setIsLoading(true);
+  setIsSuccess(false);
+  const data = form.getValues();
+  const postData = {
+    work: data.work,
+    name: data.name,
+    contact_number: data.country_code + data.contact_number,
+    email_address: data.email_address,
+  };
+  setIsLoading(true);
+  setIsSuccess(false);
+  const token = localStorage.getItem("authToken");
+  try {
+    await axios.post(IWD_ROUTES.ADD_VENDOR, postData, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onBack();
       }, 1000);
     }, 1000);
   } catch (error) {
@@ -646,4 +724,7 @@ export {
   HandleProposalSubmission,
   GetProposals,
   GetItems,
+  HandleAddVendor,
+  GetWorkData,
+  GetVendorData,
 };

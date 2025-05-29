@@ -86,15 +86,15 @@ function JobApplicationsTable() {
             Authorization: `Token ${token}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       if (response.status === 200) {
         setApplications((prevApplications) =>
           prevApplications.map((application) =>
             application.id === applicationId
               ? { ...application, status }
-              : application
-          )
+              : application,
+          ),
         );
         notifications.show({
           title: "Success",
@@ -163,7 +163,7 @@ function JobApplicationsTable() {
         ),
       },
     ],
-    []
+    [],
   );
 
   if (loading) {
@@ -176,22 +176,20 @@ function JobApplicationsTable() {
 
   return (
     <>
-        <Flex justify="space-between" align="center" mb="lg">
-          <Title order={2} >
-            Student Job Applications
-          </Title>
-          <Button onClick={downloadExcel} color="blue">
-            Download Excel
-          </Button>
-        </Flex>
+      <Flex justify="space-between" align="center" mb="lg">
+        <Title order={2}>Student Job Applications</Title>
+        <Button onClick={downloadExcel} color="blue">
+          Download Excel
+        </Button>
+      </Flex>
 
-        {applications.length > 0 ? (
-          <MantineReactTable columns={columns} data={applications} />
-        ) : (
-          <Alert color="yellow" title="No Applications">
-            No applications available for this job.
-          </Alert>
-        )}
+      {applications.length > 0 ? (
+        <MantineReactTable columns={columns} data={applications} />
+      ) : (
+        <Alert color="yellow" title="No Applications">
+          No applications available for this job.
+        </Alert>
+      )}
     </>
   );
 }

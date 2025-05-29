@@ -10,13 +10,12 @@ import {
   Container,
   Title,
   Flex,
-  ActionIcon
+  ActionIcon,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { submitNextRoundDetailsRoute } from "../../../routes/placementCellRoutes";
 import { useNavigate } from "react-router-dom";
 import { IconArrowLeft } from "@tabler/icons-react"; // Import the back arrow icon
-
 
 function CreateNextRoundForm() {
   const navigate = useNavigate();
@@ -96,7 +95,7 @@ function CreateNextRoundForm() {
   return (
     <>
       <Flex justify="space-between" mb="lg">
-      <ActionIcon
+        <ActionIcon
           onClick={() => navigate(-1)}
           color="blue"
           size="lg"

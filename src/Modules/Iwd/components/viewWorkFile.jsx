@@ -331,7 +331,7 @@ export default function ViewWorkFile({ request, handleBackToList }) {
             variant="filled"
             radius="sm"
             onClick={() => {
-              navigate(`/iwd/work/20`);
+              navigate(`/iwd/work/${request.request_id}`);
             }}
           >
             <Text size="18">Manage Bills</Text>

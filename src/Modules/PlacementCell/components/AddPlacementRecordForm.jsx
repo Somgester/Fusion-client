@@ -108,7 +108,7 @@ function AddPlacementRecordForm({ opened, onClose }) {
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             required
-            style={{ flex: "1 1 calc(50% - 16px)" }} 
+            style={{ flex: "1 1 calc(50% - 16px)" }}
           />
           <TextInput
             label="Roll No."

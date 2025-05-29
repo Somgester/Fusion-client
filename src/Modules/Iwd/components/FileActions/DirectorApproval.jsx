@@ -18,8 +18,10 @@ import classes from "../../iwd.module.css";
 import { HandleDirectorApproval } from "../../handlers/handlers";
 
 function DirectorApproval({ form, request, handleBackToList }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoadingApprove, setIsLoadingApprove] = useState(false);
+  const [isSuccessApprove, setIsSuccessApprove] = useState(false);
+  const [isLoadingReject, setIsLoadingReject] = useState(false);
+  const [isSuccessReject, setIsSuccessReject] = useState(false);
   const role = useSelector((state) => state.user.role);
   const designations = useContext(DesignationsContext);
   const [fileAction, setFileAction] = useState("approve");
@@ -86,21 +88,26 @@ function DirectorApproval({ form, request, handleBackToList }) {
           style={{
             width: "auto",
             backgroundColor: "#1E90FF",
-            color: isSuccess ? "black" : "white",
+            color: isSuccessApprove ? "black" : "white",
             border: "none",
             borderRadius: "20px",
           }}
-          disabled={isLoading || isSuccess}
+          disabled={
+            isLoadingApprove ||
+            isSuccessApprove ||
+            isLoadingReject ||
+            isSuccessReject
+          }
           onClick={() => {
             setConfirmationModal(true);
             setFileAction("approve");
           }}
         >
-          {isLoading ? (
+          {isLoadingApprove ? (
             <Center>
               <Loader color="black" size="xs" />
             </Center>
-          ) : isSuccess ? (
+          ) : isSuccessApprove ? (
             <Center>
               <CheckIcon size="16px" color="black" />
             </Center>
@@ -116,21 +123,26 @@ function DirectorApproval({ form, request, handleBackToList }) {
           style={{
             width: "auto",
             backgroundColor: "#1E90FF",
-            color: isSuccess ? "black" : "white",
+            color: isSuccessReject ? "black" : "white",
             border: "none",
             borderRadius: "20px",
           }}
-          disabled={isLoading || isSuccess}
+          disabled={
+            isLoadingApprove ||
+            isSuccessApprove ||
+            isLoadingReject ||
+            isSuccessReject
+          }
           onClick={() => {
             setConfirmationModal(true);
             setFileAction("reject");
           }}
         >
-          {isLoading ? (
+          {isLoadingReject ? (
             <Center>
               <Loader color="black" size="xs" />
             </Center>
-          ) : isSuccess ? (
+          ) : isSuccessReject ? (
             <Center>
               <CheckIcon size="16px" color="black" />
             </Center>
@@ -149,8 +161,14 @@ function DirectorApproval({ form, request, handleBackToList }) {
             HandleDirectorApproval({
               form,
               request,
-              setIsLoading,
-              setIsSuccess,
+              setIsLoading:
+                fileAction === "approve"
+                  ? setIsLoadingApprove
+                  : setIsLoadingReject,
+              setIsSuccess:
+                fileAction === "approve"
+                  ? setIsSuccessApprove
+                  : setIsSuccessReject,
               handleBackToList,
               action: fileAction,
               role,

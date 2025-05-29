@@ -46,30 +46,40 @@ export default function AwardRegistration() {
       </Title>
 
       {/* Dropdown for Award Selection */}
-      {showForm.result==="Success"?
-      <>
-      <Select
-        label="Select Award"
-        value={selectedAward}
-        onChange={(value) => setSelectedAward(value)}
-        data={[
-          {
-            value: "Director's Silver Medal",
-            label: "Director's Silver Medal",
-          },
-          { value: "Director's Gold Medal", label: "Director's Gold Medal" },
-          {
-            value: "D&M Proficiency Gold Medal",
-            label: "D&M Proficiency Gold Medal",
-          },
-        ]}
-      />
+      {showForm.result === "Success" ? (
+        <>
+          <Select
+            label="Select Award"
+            value={selectedAward}
+            onChange={(value) => setSelectedAward(value)}
+            data={[
+              {
+                value: "Director's Silver Medal",
+                label: "Director's Silver Medal",
+              },
+              {
+                value: "Director's Gold Medal",
+                label: "Director's Gold Medal",
+              },
+              {
+                value: "D&M Proficiency Gold Medal",
+                label: "D&M Proficiency Gold Medal",
+              },
+            ]}
+          />
 
-      {/* Conditional Rendering of Forms Based on Selected Award */}
-      {selectedAward === "Director's Silver Medal" && <DirectorSilverForm />}
-      {selectedAward === "Director's Gold Medal" && <DirectorGoldForm />}
-      {selectedAward === "D&M Proficiency Gold Medal" && <DMProficiencyForm />}
-    </>:<h1>{showForm.message}</h1>}
+          {/* Conditional Rendering of Forms Based on Selected Award */}
+          {selectedAward === "Director's Silver Medal" && (
+            <DirectorSilverForm />
+          )}
+          {selectedAward === "Director's Gold Medal" && <DirectorGoldForm />}
+          {selectedAward === "D&M Proficiency Gold Medal" && (
+            <DMProficiencyForm />
+          )}
+        </>
+      ) : (
+        <h1>{showForm.message}</h1>
+      )}
     </Container>
   );
 }

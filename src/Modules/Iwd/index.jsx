@@ -10,6 +10,9 @@ import "./components/GlobTable.css";
 
 function IwdPage() {
   const role = useSelector((state) => state.user.role);
+  const accessible = useSelector(
+    (state) => state.user.accessibleModules[role].iwd,
+  );
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("0");
   const [breadcrumbItems, setBreadcrumbItems] = useState([]);
@@ -18,7 +21,6 @@ function IwdPage() {
   const filteredTabs = useMemo(() => {
     return roleBasedTabs[role] || tabItems;
   }, [role]);
-
   const handleTabChange = (direction) => {
     const newIndex =
       direction === "next"
@@ -54,7 +56,7 @@ function IwdPage() {
 
     setBreadcrumbItems(breadcrumbs);
   }, [activeTab, filteredTabs]);
-  if (!Object.keys(roleBasedTabs).includes(role)) {
+  if (!accessible) {
     return (
       <Flex justify="center" align="center" style={{ height: "100vh" }}>
         <Text color="red" size="lg">

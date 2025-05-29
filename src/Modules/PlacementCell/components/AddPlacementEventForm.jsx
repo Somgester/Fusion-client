@@ -289,7 +289,7 @@ function AddPlacementEventForm({ onClose }) {
             onChange={(e) => setCtc(e.target.value)}
           />
         </Grid.Col>
-        
+
         <Grid.Col span={4}>
           <Select
             label="Placement Type"
